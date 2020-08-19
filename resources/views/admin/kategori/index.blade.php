@@ -33,26 +33,27 @@
 <div class="row">
 	<div class="col-md-6 mb-3">
 		<a class="btn btn-primary"
-		href="{{ route('kategori.create') }}">[+] Buat Baru</a>
+		href="{{ route('category.create') }}">[+] Buat Baru</a>
 	</div>
 </div>
 
 <table class="table">
 	<thead>
-		<th>Kategori</th><th>&nbsp;</th>
+		<th>Kategori</th>
+		<th>Action</th>
 	</thead>
 	<tbody>
 	@foreach($data as $row)
 		<tr>
-			<td>{{ $row->nama_kategori }}</td>
+			<td>{{ $row->name }}</td>
 			<td>
 				<a class="btn btn-sm btn-warning" 
-				href="{{ route('kategori.edit',['kategori'=>$row->id]) }}">
+				href="{{ route('category.edit',['category'=>$row->id]) }}">
 					<i class="fas fa-edit"></i>
 				</a>
 				<button class="btn btn-sm btn-danger tombol-hapus" 
 				type="button" 
-				data-url="{{ route('kategori.destroy',['kategori'=>$row->id]) }}">
+				data-url="{{ route('category.destroy',['category'=>$row->id]) }}">
 					<i class="fas fa-trash-alt"></i>
 				</button> 
 			</td>

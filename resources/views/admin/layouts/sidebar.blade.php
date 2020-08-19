@@ -10,15 +10,22 @@
 			</li><!-- ./Dashboard -->
 
 			<li class="nav-item">
-				<a class="nav-link {{ request()->is('admin/kategori*') ? 'active':''}}" 
-					href="{{ route('kategori.index') }}">
-					<i class="fas fa-list"></i> Kategori
+				<a class="nav-link {{ request()->is('admin/article*') ? 'active':''}}" 
+					href="{{ route('article.index') }}">
+					<i class="fas fa-list"></i> Artikel
 				</a>
-			</li><!-- ./Kategori -->
+			</li><!-- ./Artikel -->
+			
+			<li class="nav-item">
+				<a class="nav-link {{ request()->is('admin/grade*') ? 'active':''}}" 
+					href="{{ route('grade.index') }}">
+					<i class="fas fa-list"></i> Kelas
+				</a>
+			</li><!-- ./Kelas -->
 
 			<li class="nav-item">
-				<a class="nav-link {{ request()->is('admin/guru*') ? 'active':''}}" 
-					href="{{ route('guru.index') }}">
+				<a class="nav-link {{ request()->is('admin/teacher*') ? 'active':''}}" 
+					href="{{ route('teacher.index') }}">
 					<i class="fas fa-list"></i> Guru
 				</a>
 			</li><!-- ./Kategori -->

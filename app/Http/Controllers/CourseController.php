@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Guru;
 
-class GuruController extends Controller
+class CourseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +13,7 @@ class GuruController extends Controller
      */
     public function index()
     {
-
+        //
     }
 
     /**

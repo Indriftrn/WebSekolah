@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Kategori;
+use App\Models\Category;
 
-class KategoriController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        $result = Kategori::orderBy('nama_kategori','asc')->get();
+        $result = Category::orderBy('created_at','desc')->get();
 
         return view('admin.kategori.index',[ 'data'=>$result ]);
     }
@@ -37,14 +37,13 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->all();
         $request->validate([
-            'nama_kategori'=>'required|min:3',
+            'name'=>'required|min:3'
         ]);
 
-        Kategori::create([
-                'nama_kategori'=>$request->nama_kategori,
-            ]);
-        return redirect()->route('kategori.index')->with('store','Berhasil Disimpan!');
+        Category::create($data);
+        return redirect()->route('category.index')->with('store','Berhasil Disimpan!');
     }
 
     /**

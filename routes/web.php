@@ -18,7 +18,11 @@ Route::get('/', function () {
 Route::group(['prefix' => 'admin'], function(){
 	Route::get('/','DashboardController@index')->name('dashboard');
 
-	Route::resource('kategori','KategoriController');
-	Route::resource('guru','GuruController');
+	Route::resource('category','CategoryController');
+	Route::resource('grade','GradeController');
+	Route::resource('course','CourseController');
+	Route::resource('teacher','TeacherController');
+	Route::resource('students','StudentController');
+	Route::resource('article','ArticleController');
 });
 
