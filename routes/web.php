@@ -22,7 +22,7 @@ Route::group(['prefix' => 'admin'], function(){
 	Route::resource('grade','GradeController');
 	Route::resource('course','CourseController');
 	Route::resource('teacher','TeacherController');
-	Route::resource('students','StudentController');
+	Route::resource('student','StudentController');
 	Route::resource('article','ArticleController');
+	Route::resource('gallery','GalleryController');
 });
-

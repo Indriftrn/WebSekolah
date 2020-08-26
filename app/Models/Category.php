@@ -16,5 +16,9 @@ class Category extends Model
     {
         return $this->hasMany(Article::class);
     }
+    public function gallery()
+    {
+        return $this->hasMany(Gallery::class);
+    }
     
 }

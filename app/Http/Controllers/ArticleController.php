@@ -39,7 +39,6 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-       
         DB::beginTransaction();
         try {
             if (isset($request->name) && $request->name) {
@@ -52,7 +51,7 @@ class ArticleController extends Controller
     
                 $thumbnail = $request->file('thumbnail');
                 $thumbnail_article = rand() . '.' . $thumbnail->getClientOriginalExtension();
-                $thumbnail->move(public_path('storage/uplods/media'), $thumbnail_article);
+                $thumbnail->move(public_path('storage/uploads/media/article'), $thumbnail_article);
             
                 $insert = Article::create([
                     'title' => $request->title,
@@ -89,7 +88,9 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $articles = Article::find($id);
+        $categories = Category::all();
+        return view('admin.artikel.edit', compact('articles','categories'));
     }
 
     /**
@@ -101,7 +102,31 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+    
+        $data= $request->all();
+
+
+        $data['slug'] =  Str::slug($request->title);
+        $data['summer'] = str_limit($request->description, 20);
+        DB::beginTransaction();
+        try {
+            $isi = Article::where('id',$id)->first();
+            $article_thumbnail = $request->hasFile('thumbnail');
+            if($article_thumbnail !='') {
+                $uniquename='thumbnail_article_'.md5($id);
+                $filename=$uniquename.'.'.$request->file('thumbnail')->getClientOriginalExtension();
+                $path=public_path('storage/uploads/media/article');
+                $request->thumbnail->move($path, $filename);
+                $data['thumbnail']=$filename;
+    
+            }
+            $isi->update($data);
+            DB::commit();
+            return redirect('/admin/article')->with('sukses', 'Data Berahsil DiUpdate');            
+        } catch (\Exception $ex) {
+            DB::rollback();
+            throw $ex;
+        }    
     }
 
     /**
@@ -110,8 +135,9 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Article $article)
     {
-        //
+        $article->delete();
+        return redirect('/admin/article')->with('sukses', 'Data Berahsil Dihapus');            
     }
 }

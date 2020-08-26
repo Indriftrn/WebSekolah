@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-Admin|Faqs
+Admin|Article
 @endsection
 
 @section('content')
@@ -35,19 +35,28 @@ Admin|Faqs
             <tbody>
               @foreach($articles as $article)
 
-                <tr>
-                  <td>{{$loop->iteration}}</td>
-                  <td>{{$article->title}}</td>
-                  <td><img src="{{asset('storage/uplods/media/'. $article->thumbnail)}}" alt="" width="70px"  width="70px"></td>
-                  <td>{{$article->category->name}}</td>
-                  <td>
-                    <div class="btn-group btn-group-sm">
-                      <a href="" class="btn btn-success"><i class="fas fa-pen"></i></a>
-                      <a href="" class="btn btn-danger"
-                        onclick="return confirm('Anda Yakin untuk menghapus ?') "><i class="fas fa-trash"></i></a>
-                    </div>
-                  </td>
-                </tr>
+              <tr>
+                <td>{{$loop->iteration}}</td>
+                <td>{{$article->title}}</td>
+                <td><img src="{{asset('storage/uploads/media/article/'. $article->thumbnail)}}" alt="" width="70px"
+                    width="70px">
+                </td>
+                <td>{{$article->category->name}}</td>
+                <td>
+                  <div class="btn-group btn-group-sm">
+                    <a href="{{route('article.edit', $article->id)}}" class="btn btn-success"><i
+                        class="fas fa-pen"></i></a>
+                    <form action="{{ route('article.destroy' , $article->id)}}" method="POST">
+                      <input name="_method" type="hidden" value="DELETE">
+                      @csrf
+                      @method('delete')
+                      <button type="submit" class="btn btn-danger"
+                        onclick="return confirm('Apakah Anda yakin untuk menghapus')"><i
+                          class="fas fa-trash"></i></button>
+                    </form>
+
+                </td>
+              </tr>
               @endforeach
             </tbody>
           </table>
