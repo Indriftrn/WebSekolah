@@ -58,7 +58,8 @@ Admin|Article|Tambah
                   <input type="file" class="form-control" name="thumbnail" autocomplete="name">
                 </div>
                 <div class="col-md-4">
-                  <img src="{{asset('storage/uplods/media/'. $articles->thumbnail)}}" alt="" width="100px" width="70px">
+                  <img src="{{asset('storage/uploads/media/article/'. $articles->thumbnail)}}" alt="" width="100px"
+                    width="70px">
                 </div>
 
               </div>

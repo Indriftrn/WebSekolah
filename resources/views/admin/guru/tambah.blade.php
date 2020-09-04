@@ -13,10 +13,8 @@ Admin|Guru|Tambah
           <div class="card-header">
             <h3 class="card-title">Guru </h3>
           </div>
-          <form method="POST" action="{{route('teacher.update', $teachers)}}" autocomplete="off"
-            enctype="multipart/form-data">
+          <form method="POST" action="{{route('teacher.store')}}" autocomplete="off" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
             <div class="card-body">
               <div class="form-row">
                 <div class="col-md-12">
@@ -26,8 +24,7 @@ Admin|Guru|Tambah
                   <select name="course_id" id="" class="form-control">
                     <option value="">Tidak Ada Mata Pelajaran</option>
                     @foreach ($courses as $course)
-                    <option value="{{ $course->id }}" {{$course->id == $teachers->course_id ? 'selected' : "" }}>
-                      {{ $course->name}}</option>
+                    <option value="{{ $course->id }}">{{ $course->name}}</option>
                     @endforeach
                   </select>
                 </div>
@@ -45,7 +42,7 @@ Admin|Guru|Tambah
                 </div>
                 <div class="form-group col-md-8">
                   <input id="title" type="text" class="form-control" name="nip" id="nip" readonly autocomplete="off"
-                    autofocus value="{{$teachers->nip}}">
+                    autofocus value="{{mt_rand(1, 9999999) }}">
                 </div>
               </div>
               <div class="form-row">
@@ -53,17 +50,17 @@ Admin|Guru|Tambah
                   <label for="title" class="col-form-label">Nama:</label>
                 </div>
                 <div class="form-group col-md-8">
-                  <input type="text" class="form-control" name="name_guru" value="{{$teachers->name}}">
+                  <input type="text" class="form-control" name="name_guru">
                 </div>
               </div>
-              <div class=" form-row">
+              <div class="form-row">
                 <div class="col-md-12">
                   <label for="title" class="col-form-label">Jenis Kelamin</label>
                 </div>
                 <div class="form-group col-md-8">
                   <select name="gender" id="" class="form-control">
-                    <option value="Laki-Laki" {{$teachers->gender === 'Laki-Laki' ? 'selected' : ""}}>Laki-Laki</option>
-                    <option value="Perempuan" {{$teachers->gender === 'Perempuan' ? 'selected' : ""}}>Perempuan</option>
+                    <option value="Laki-Laki">Laki-Laki</option>
+                    <option value="Perempuan">Perempuan</option>
                   </select>
                 </div>
               </div>
@@ -72,7 +69,7 @@ Admin|Guru|Tambah
                   <label for="title" class="col-form-label">Tanggal Lahir:</label>
                 </div>
                 <div class="form-group col-md-8">
-                  <input type="date" class="form-control" name="birthday" value="{{$teachers->birthday}}">
+                  <input type="date" class="form-control" name="birthday">
                 </div>
               </div>
               <div class="form-row">
@@ -80,7 +77,7 @@ Admin|Guru|Tambah
                   <label for="title" class="col-form-label">Nomer Telphone:</label>
                 </div>
                 <div class="form-group col-md-8">
-                  <input type="number" class="form-control" name="phone_number" value="{{$teachers->phone_number}}">
+                  <input type="number" class="form-control" name="phone_number">
                 </div>
               </div>
               <div class="form-row">
@@ -89,7 +86,7 @@ Admin|Guru|Tambah
                 </div>
                 <div class="form-group  col-md-8">
                   <textarea class="textarea" placeholder="Alamat" name="address"
-                    style="width: 100%; height: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$teachers->address}}</textarea>
+                    style="width: 100%; height: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                 </div>
               </div>
 

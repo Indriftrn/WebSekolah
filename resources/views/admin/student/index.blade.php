@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-Admin|Article
+Admin|Siswa
 @endsection
 
 @section('content')
@@ -11,8 +11,8 @@ Admin|Article
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Artikel</h3>
-          <a href="{{route('article.create')}}" class="btn btn-primary float-right">Tambah</a>
+          <h3 class="card-title">Siswa</h3>
+          <a href="{{route('student.create')}}" class="btn btn-primary float-right">Tambah</a>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -25,27 +25,28 @@ Admin|Article
           <table id="example1" class="table table-bordered table-striped text-center">
             <thead>
               <tr>
-                <th>No</th>
-                <th>Title</th>
-                <th>Thumbnail</th>
-                <th>Category</th>
+                <th>NIS</th>
+                <th>Nama </th>
+                <th>Kelas</th>
+                <th>Email</th>
+                <th>Nomer Telephone</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              @foreach($articles as $article)
+              @foreach($students as $student)
+
               <tr>
-                <td>{{$loop->iteration}}</td>
-                <td>{{$article->title}}</td>
-                <td><img src="{{asset('storage/uploads/media/article/'. $article->thumbnail)}}" alt="" width="70px"
-                    width="70px">
-                </td>
-                <td>{{$article->category->name}}</td>
+                <td>{{$student->nis}}</td>
+                <td>{{$student->name}}</td>
+                <td>{{$student->grade->name}}</td>
+                <td>{{$student->email}}</td>
+                <td>{{$student->phone_number}}</td>
                 <td>
                   <div class="btn-group btn-group-sm">
-                    <a href="{{route('article.edit', $article->id)}}" class="btn btn-success"><i
+                    <a href="{{route('student.edit',$student->id)}}" class="btn btn-success"><i
                         class="fas fa-pen"></i></a>
-                    <form action="{{ route('article.destroy' , $article->id)}}" method="POST">
+                    <form action="{{ route('student.destroy' , $student->id)}}" method="POST">
                       <input name="_method" type="hidden" value="DELETE">
                       @csrf
                       @method('delete')
@@ -53,7 +54,7 @@ Admin|Article
                         onclick="return confirm('Apakah Anda yakin untuk menghapus')"><i
                           class="fas fa-trash"></i></button>
                     </form>
-
+                  </div>
                 </td>
               </tr>
               @endforeach

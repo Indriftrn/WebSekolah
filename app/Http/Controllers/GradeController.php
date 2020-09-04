@@ -13,7 +13,9 @@ class GradeController extends Controller
      */
     public function index()
     {
-        //
+        $result = Grade::orderBy('created_at','desc')->get();
+
+        return view('admin.kelas.index',[ 'data'=>$result ]);
     }
 
     /**

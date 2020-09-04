@@ -12,11 +12,17 @@ Admin|Galeri
   <!-- Grid column -->
   <div class="col-md-12 d-flex justify-content-center mb-2 mt-4">
 
-    <button type="button" class="btn btn-primary ml-2 filter" data-rel="all">All</button>
-    <button type="button" class="btn btn-primary ml-2 filter" data-rel="1">Mountains</button>
-    <button type="button" class="btn btn-primary ml-2 filter" data-rel="2">Sea</button>
+    <a href="{{route('gallery.create')}}" class="btn btn-primary ml-2 filter" data-rel="all">Tambah</a>
+
+
 
   </div>
+  @if ($message = Session::get('sukses'))
+  <div class="alert alert-success alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
+  </div>
+  @endif
   <!-- Grid column -->
 
 </div>
@@ -25,77 +31,58 @@ Admin|Galeri
 <!-- Grid row -->
 <div class="gallery" id="gallery">
 
+  @foreach ($galleries as $gallery)
   <!-- Grid column -->
   <div class="mb-3 pics animation all 2">
-    <img class="img-fluid img-cursor" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(73).jpg"
-      alt="Card image cap" data-toggle="modal" data-target="#modal1">
+    <img class="img-fluid img-cursor" src="{{asset('storage/uploads/media/gallery/'. $gallery->images)}}"
+      alt="Card image cap" data-toggle="modal" data-target="#modal-{{$gallery->id}}">
   </div>
-  <!-- Grid column -->
+  <div class="modal fade" id="modal-{{$gallery->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
 
-  <!-- Grid column -->
-  <div class="mb-3 pics animation all 1">
-    <img class="img-fluid img-cursor" src="https://mdbootstrap.com/img/Photos/Vertical/mountain1.jpg"
-      alt="Card image cap">
-  </div>
-  <!-- Grid column -->
+      <!--Content-->
+      <div class="modal-content">
 
-  <!-- Grid column -->
-  <div class="mb-3 pics animation all 1">
-    <img class="img-fluid img-cursor" src="https://mdbootstrap.com/img/Photos/Vertical/mountain2.jpg"
-      alt="Card image cap">
-  </div>
-  <!-- Grid column -->
+        <!--Body-->
+        <div class="modal-body mb-0 p-0">
+          <img class="img-fluid" src="{{asset('storage/uploads/media/gallery/'. $gallery->images)}}"
+            alt="Card image cap" width="100%">
 
-  <!-- Grid column -->
-  <div class="mb-3 pics animation all 2">
-    <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(35).jpg"
-      alt="Card image cap">
-  </div>
-  <!-- Grid column -->
 
-  <!-- Grid column -->
-  <div class="mb-3 pics animation all 2">
-    <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-      alt="Card image cap">
-  </div>
-  <!-- Grid column -->
+        </div>
 
-  <!-- Grid column -->
-  <div class="mb-3 pics animation all 1">
-    <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Vertical/mountain3.jpg" alt="Card image cap">
+        <!--Footer-->
+        <div class="modal-footer justify-content-center">
+          <span class="mr-4">Gambar!</span>
+          <a href="{{route('gallery.edit', $gallery->id)}}" class="btn btn-success" title="Edit"><i
+              class="fas fa-pen"></i></a>
+          <form action="{{ route('gallery.destroy' , $gallery->id)}}" method="POST">
+            <input name="_method" type="hidden" value="DELETE">
+            @csrf
+            @method('delete')
+            <button type="submit" class="btn btn-danger"
+              onclick="return confirm('Apakah Anda yakin untuk menghapus')"><i class="fas fa-trash"></i></button>
+          </form>
+
+          <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4"
+            data-dismiss="modal">Close</button>
+
+        </div>
+
+      </div>
+      <!--/.Content-->
+
+    </div>
   </div>
   <!-- Grid column -->
+  @endforeach
+
+
+
+
 
 </div>
 <!-- Grid row -->
-<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
 
-    <!--Content-->
-    <div class="modal-content">
-
-      <!--Body-->
-      <div class="modal-body mb-0 p-0">
-        <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-          alt="Card image cap" width="100%">
-
-
-      </div>
-
-      <!--Footer-->
-      <div class="modal-footer justify-content-center">
-        <span class="mr-4">Gambar!</span>
-        <a type="button" class="btn-floating btn-sm btn-fb" title="Edit"><i class="fas fa-pen"></i></a>
-        <a type="button" class="btn-floating btn-sm btn-ins" title="Hapus"><i class="fas fa-trash"></i></a>
-
-        <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4"
-          data-dismiss="modal">Close</button>
-
-      </div>
-
-    </div>
-    <!--/.Content-->
-
-  </div>
-</div>
 @endsection

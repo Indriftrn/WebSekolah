@@ -94,6 +94,7 @@ body {
  .form-control-dark:focus {
  	border-color: transparent;
  	box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+<<<<<<< HEAD
  }
  .gallery {
 	-webkit-column-count: 3;
@@ -130,3 +131,6 @@ body {
 	.img-cursor{
 		cursor: pointer;
 	}
+=======
+ }
+>>>>>>> d90e6e164a547366012a0363b47cff91144d2b9c

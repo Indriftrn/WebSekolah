@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Teacher;
 
 class CourseController extends Controller
 {
@@ -13,7 +14,9 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $result = Course::orderBy('created_at','desc')->get();
+
+        return view('admin.course.index',[ 'data'=>$result ]);
     }
 
     /**
@@ -23,7 +26,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.course.create');
     }
 
     /**
@@ -34,7 +37,13 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $request->validate([
+            'name'=>'required|min:3'
+        ]);
+
+        Course::create($data);
+        return redirect()->route('course.index')->with('store','Berhasil Disimpan!');
     }
 
     /**
@@ -56,7 +65,7 @@ class CourseController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('admin.course.edit',['row'=>$course]);
     }
 
     /**
@@ -79,6 +88,7 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kategori->delete();
+        return redirect()->route('course.index')->with('destroy','Berhasil Dihapus!');
     }
 }

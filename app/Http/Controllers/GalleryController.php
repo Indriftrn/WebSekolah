@@ -40,20 +40,12 @@ class GalleryController extends Controller
     {
         DB::beginTransaction();
         try {
-            if (isset($request->name) && $request->name) {
-                $categories = new Category();
-                $categories->name = $request->name;
-                $categories->save();      
-                DB::commit();        
-                return redirect()->back();
-            }     
     
                 $images = $request->file('images');
                 $images_gallery = rand() . '.' . $images->getClientOriginalExtension();
                 $images->move(public_path('storage/uploads/media/gallery'), $images_gallery);
             
                 $insert = Gallery::create([
-                    'category_id' => $request->category_id,
                     'images' =>$images_gallery,
                 ]);
             DB::commit();
@@ -106,6 +98,7 @@ class GalleryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $galleries = Gallery::find($id)->delete();
+        return redirect('/admin/gallery')->with('sukses', 'Data Berhasil Dihapus');            
     }
 }

@@ -41,26 +41,34 @@ class ArticleController extends Controller
     {
         DB::beginTransaction();
         try {
-            if (isset($request->name) && $request->name) {
-                $categories = new Category();
-                $categories->name = $request->name;
-                $categories->save();      
-                DB::commit();        
-                return redirect()->back();
-            }     
-    
                 $thumbnail = $request->file('thumbnail');
                 $thumbnail_article = rand() . '.' . $thumbnail->getClientOriginalExtension();
                 $thumbnail->move(public_path('storage/uploads/media/article'), $thumbnail_article);
-            
-                $insert = Article::create([
-                    'title' => $request->title,
-                    'description' => $request->description,
-                    'summer' => str_limit($request->description, 20),
-                    'category_id' => $request->category_id,
-                    'thumbnail' =>$thumbnail_article,
-                    'slug' => Str::slug($request->title)
-                ]);
+                if (isset($request->name) && $request->name) {
+                    $categories = new Category();
+                    $categories->name = $request->name;
+                    $categories->save();      
+                    if(isset($categories['id'])){
+                        $insert = Article::create([
+                            'title' => $request->title,
+                            'description' => $request->description,
+                            'summer' => str_limit($request->description, 20),
+                            'category_id' =>$categories['id'],
+                            'thumbnail' =>$thumbnail_article,
+                            'slug' => Str::slug($request->title)
+                        ]);
+                    }
+                } else{
+                    $insert = Article::create([
+                        'title' => $request->title,
+                        'description' => $request->description,
+                        'summer' => str_limit($request->description, 20),
+                        'category_id' => $request->category_id,
+                        'thumbnail' =>$thumbnail_article,
+                        'slug' => Str::slug($request->title)
+                    ]);
+                }    
+
             DB::commit();
             return redirect('/admin/article')->with('sukses', 'Data Berahsil Disimpan');            
         } catch (\Exception $ex) {
@@ -120,7 +128,25 @@ class ArticleController extends Controller
                 $data['thumbnail']=$filename;
     
             }
-            $isi->update($data);
+            if (isset($request->name) && $request->name) {
+                $categories = new Category();
+                $categories->name = $request->name;
+                $categories->save();      
+                if(isset($categories['id'])){
+                    
+                    $isi->update([
+                        'title' => $request->title,
+                        'description' => $request->description,
+                        'summer' => str_limit($request->description, 20),
+                        'category_id' =>$categories['id'],
+                        'thumbnail' =>$filename,
+                        'slug' => Str::slug($request->title)
+                    ]);
+                }
+            }  else{
+                $isi->update($data);
+            }   
+            
             DB::commit();
             return redirect('/admin/article')->with('sukses', 'Data Berahsil DiUpdate');            
         } catch (\Exception $ex) {
